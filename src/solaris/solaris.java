@@ -1,3 +1,7 @@
+/*
+создать enum для плане солнечной системы
+ */
+
 package solaris;
 
 
@@ -30,13 +34,13 @@ public enum solaris {
     private float EMMass, AUOrbital;
     private long KMRadius;
 
-    Solaris(float mass, long diameter, float orbit) {
+    solaris(float mass, long diameter, float orbit) {
         this.EMMass = mass;
         this.KMRadius = diameter / 2;
         this.AUOrbital = orbit;
     }
 
     public static void main(String[] args) {
-        System.out.printf("NEPTUNE - %s%n", Solaris.NEPTUNE.AUOrbital * astronomicalUnit);
+        System.out.printf("NEPTUNE - %s%n", solaris.NEPTUNE.AUOrbital * astronomicalUnit);
     }
 }
