@@ -5,7 +5,9 @@ import com.itmo.collections.inner.Message;
 import com.itmo.collections.inner.MessagePriority;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by xmitya on 17.10.16.
@@ -30,15 +32,43 @@ public class Tasks1 {
     private static void countEachPriority(List<Message> messages) {
         // Сосчитайте количество сообщений для каждого приоритета.
         // Ответ необходимо вывести в консоль.
+        int lowprior = 0, mediumprior = 0, highprior = 0, urgentprior = 0;
 
-        // TODO implement
-    }
+        for (Message msg : messages) {
+            if (msg.getPriority() == MessagePriority.LOW) {
+                lowprior += 1;
+            }
+            if (msg.getPriority() == MessagePriority.MEDIUM) {
+                mediumprior += 1;
+            }
+            if (msg.getPriority() == MessagePriority.HIGH) {
+                highprior += 1;
+            }
+            if (msg.getPriority() == MessagePriority.URGENT) {
+                urgentprior += 1;
+            }
+        }
+        System.out.printf("LOW=%d%n", lowprior);
+        System.out.printf("MEDIUM=%d%n", mediumprior);
+        System.out.printf("HIGH=%d%n", highprior);
+        System.out.printf("URGENT=%d%n", urgentprior);
+}
 
     private static void countCountEachCode(List<Message> messages) {
         // Сосчитайте количество сообщений для каждого кода сообщения.
         // Ответ необходимо вывести в консоль.
 
-        // TODO implement
+        Integer cur;
+        Map<Integer, Integer> map = new HashMap<>();
+        for(Message mes : messages){
+            cur = map.get(mes.getCode());
+            if (cur == null)
+                cur = 0;
+            cur += 1;
+            map.put(mes.getCode(), cur);
+        }
+
+        System.out.println(map);
     }
 
     private static void countUniqueMessages(List<Message> messages) {
