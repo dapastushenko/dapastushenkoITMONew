@@ -4,10 +4,7 @@ import com.itmo.collections.inner.MessageGenerator;
 import com.itmo.collections.inner.Message;
 import com.itmo.collections.inner.MessagePriority;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by xmitya on 17.10.16.
@@ -58,16 +55,15 @@ public class Tasks1 {
         // Сосчитайте количество сообщений для каждого кода сообщения.
         // Ответ необходимо вывести в консоль.
 
-        Integer cur;
+        Integer n;
         Map<Integer, Integer> map = new HashMap<>();
         for(Message mes : messages){
-            cur = map.get(mes.getCode());
-            if (cur == null)
-                cur = 0;
-            cur += 1;
-            map.put(mes.getCode(), cur);
+            n = map.get(mes.getCode());
+            if (n == null)
+                n = 0;
+            n += 1;
+            map.put(mes.getCode(), n);
         }
-
         System.out.println(map);
     }
 
@@ -75,7 +71,9 @@ public class Tasks1 {
         // Сосчитайте количество уникальных сообщений.
         // Ответ необходимо вывести в консоль.
 
-        // TODO implement
+        HashSet<Message> msg = new HashSet<>(messages);
+
+        System.out.println("Количество уникальных сообщений:"+msg.size());
     }
 
     private static List<Message> genuineMessagesInOriginalOrder(List<Message> messages) {
@@ -86,9 +84,9 @@ public class Tasks1 {
         // [{URGENT, 4}, {HIGH, 9}, {LOW, 3}].
         // Т.е. остались только уникальные значения, и порядок их поступления сохранен.
 
-        // TODO implement
+        LinkedHashSet<Message> msg= new LinkedHashSet<>(messages);
 
-        return messages;
+        return new LinkedList<Message>(msg);
     }
 
     private static void removeEach(Collection<Message> messages, MessagePriority priority) {
