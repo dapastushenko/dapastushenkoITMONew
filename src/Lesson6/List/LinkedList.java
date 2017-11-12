@@ -1,7 +1,7 @@
 package Lesson6.List;
 
 public class LinkedList implements List, Queue,Stack {
-
+/*
     @Override
     public void add() {
 
@@ -36,4 +36,5 @@ public class LinkedList implements List, Queue,Stack {
     public Object pop() {
         return null;
     }
+    */
 }

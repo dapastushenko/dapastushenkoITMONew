@@ -1,7 +1,7 @@
 package Lesson6.List;
 
 public interface Queue {
-    void add(Object);
+//    void add(Object);
 
-    Object poll();
+//    Object poll();
 }

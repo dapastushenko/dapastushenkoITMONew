@@ -1,8 +1,9 @@
 package angryCalculator;
 
+
 import java.util.Scanner;
 
-public class main {
+public class Main {
     public static void main(String[] args){
         String x;
         String y;
@@ -13,7 +14,8 @@ public class main {
 
     }
 
-    private static void parse(String x) {
-        f
+    private static String[] parse(String x) {
+
+        return new String[0];
     }
 }
