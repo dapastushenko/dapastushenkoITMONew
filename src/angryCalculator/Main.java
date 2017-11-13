@@ -8,20 +8,41 @@ public class Main {
         String y;
 
         Scanner str = new Scanner(System.in);
-        System.out.println("Введите значение переменной х");
+        System.out.printf("Input: %n");
         x=str.nextLine();
 //        parse(x);
         y="x = 1";
-        String[] split = y.split(" ");
-        for ( String o: split){
-            System.out.println(o);
+//        String[] split = x.split(" ");
+        try {
+            //скрыть потом
+            for ( String o: parse(x)){
+                System.out.println(o);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
 
     }
-//    public static String[] parse(String x) {
+    public static String[] parse(String val) throws Exception{
+//        try
+        String[] split = val.split(" ");
+        return split;
+    }
+    public static void Accum(int x, int y, String acc){
+        switch (acc){
+            case "+":
+                System.out.printf("x+y="+(x+y));
+              break;
+            case "-":
+                System.out.printf("x-y="+(x-y));
+                break;
+            case "//":
 
-//        return;
-//    }
+                System.out.printf("x//y="+(x/y));
+                break;
+        }
+
+    }
 
 }
