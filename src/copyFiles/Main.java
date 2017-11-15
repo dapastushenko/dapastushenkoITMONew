@@ -26,4 +26,26 @@ public class Main {
                 out.write(buf, 0, len);
         }
     }
+    private void fileSplit(String fileName, int partCount) throws Exception {
+        Path filePath = Paths.get(fileName);
+        try (BufferedInputStream input =
+                     new BufferedInputStream(Files.newInputStream(filePath))) {
+            long size = Files.size(filePath);
+            //сделать более хитрее
+            byte[] buffer = new byte[1024];
+            long partSize = size / partCount;
+            for (int i = 0; i < partCount; i++) {
+                String partFileName = fileName + "$" + i;
+                try (OutputStream outputStream = Files.newOutputStream(Paths.get(partFileName));
+                     BufferedOutputStream output = new BufferedOutputStream(outputStream)) {
+                    int currentSize = 0;
+                    while (currentSize < partSize) {
+                        int byteCount = input.read(buffer);
+                        output.write(buffer, 0, byteCount);
+                        currentSize += byteCount;
+                    }
+                }
+            }
+        }
+    }
 }
