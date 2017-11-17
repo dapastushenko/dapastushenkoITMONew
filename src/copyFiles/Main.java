@@ -1,8 +1,11 @@
 package copyFiles;
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
+
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -41,6 +44,9 @@ public class Main {
                     int currentSize = 0;
                     while (currentSize < partSize) {
                         int byteCount = input.read(buffer);
+                        //вставить if
+                        if (byteCount==-1)
+                            break;
                         output.write(buffer, 0, byteCount);
                         currentSize += byteCount;
                     }
