@@ -1,4 +1,4 @@
-package Patterns;
+package patterns;
 
 public class JapanFactory extends CarFactory {
     @Override

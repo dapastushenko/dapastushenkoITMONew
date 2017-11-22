@@ -1,6 +1,6 @@
-package Patterns;
+package patterns;
 
-public class Audi implements Car {
+public class Vaz implements Car {
     @Override
     public int drive(int distance, int fuel) {
         return 0;

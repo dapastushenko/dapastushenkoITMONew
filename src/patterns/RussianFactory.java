@@ -1,4 +1,4 @@
-package Patterns;
+package patterns;
 
 public class RussianFactory extends CarFactory {
     @Override
