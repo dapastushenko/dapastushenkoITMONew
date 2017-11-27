@@ -2,14 +2,11 @@ package diplom;
 import java.io.File;
 
 public class DiskSpaceDetails {
-//    private static final String VOLUME = "c:";
+
 
     public static void main(String[] args) {
         File[] roots = File.listRoots();
         for (File file: roots) {
-            //    System.out.println(file.getAbsolutePath());
-
-//        final File file = new File(VOLUME);
 
             long totalSpace = file.getTotalSpace();
             long freeSpace = file.getFreeSpace();
