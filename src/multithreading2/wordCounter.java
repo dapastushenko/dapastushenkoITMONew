@@ -8,7 +8,7 @@ import java.util.Map;
 public class wordCounter {
     private Map<String,Integer> wordMap;
 
-    private void start(){
+    private void start() throws InterruptedException {
         int cpucount = Runtime.getRuntime().availableProcessors();
 
         List<String> words = new ArrayList<>(); // read from disk
@@ -17,7 +17,8 @@ public class wordCounter {
 
         for (int i=0; i<cpucount;i++)
             threads.add(new Counter(words.subList(0,0)));
-
+        for (Counter thread: threads)
+            thread.join();
 
     }
     private class Counter extends Thread{
@@ -33,7 +34,7 @@ public class wordCounter {
             super.run();
         }
     }
-public static void main(String[] args){
+public static void main(String[] args) throws InterruptedException {
         new wordCounter().start();
 }
 }
