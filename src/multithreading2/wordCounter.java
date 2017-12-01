@@ -46,24 +46,24 @@ public class wordCounter {
         return (ArrayList) wrds;
     }
     private class Counter extends Thread{
-        private final List<String> words = null;
+        private List<String> words = null;
         private final Map<String,Integer> map=new HashMap<>();
 
 
         private Counter(List<String> words) {
             for (int i=0; i<words.size();i++){
+
                 if (map.isEmpty())
                     map.put(words.get(i),1);
                 if (map.get(words.get(i))==null)
                     map.put(words.get(i),1);
-//                map.replace(words[i],map.get(words[i]).getClass().,q+1);
-            }
- //           this.words=words;
+                map.replace(words.get(i),(map.get(words.get(i)))+1);
+            this.words=words;
         }
 
-        @Override
-        public void run() {
-            super.run();
+//        @Override
+//        public void run() {
+//            super.run();
         }
     }
     public static void main(String[] args) throws InterruptedException, IOException {
