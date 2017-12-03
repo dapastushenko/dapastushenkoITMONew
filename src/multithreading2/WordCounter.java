@@ -39,7 +39,7 @@ public class WordCounter {
     }
 
     private List<String> textpars() throws IOException {
-        File text = new File("D:\\wp.txt");
+        File text = new File("G:\\IDEAProjects\\dapastushenkoITMONew\\src\\multithreading2\\wp");
         List<String> lines = Files.readAllLines(text.toPath());
         List<String> wrds = new ArrayList<>();
         for (String line : lines) {
