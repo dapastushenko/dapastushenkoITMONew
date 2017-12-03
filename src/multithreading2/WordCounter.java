@@ -32,6 +32,9 @@ public class WordCounter {
         for (Counter thread : threads)
             thread.join();
 
+        for (Map.Entry<String,Integer> n: wordMap.entrySet()){
+            System.out.printf(n.toString()+"\n");
+        }
         // count top 100
     }
 
@@ -76,9 +79,16 @@ public class WordCounter {
             synchronized(WordCounter.this) {
                 if (wordMap == null)
                     wordMap = new HashMap<>();
-
                 wordMap.putAll(map);
-//                wordMap.merge(map);
+                for (Map.Entry<String, Integer> e : map.entrySet()){
+                    Integer cnt=e.getValue();
+                    String str=e.getKey();
+                    Integer cnt2=wordMap.get(str);
+                    if (cnt2==0)
+                        wordMap.put(str,cnt);
+                    else
+                        wordMap.replace(str,cnt+cnt2);
+                }
                 // использовать merge
 
             }
