@@ -80,9 +80,12 @@ public class WordCounter {
                 if (wordMap == null)
                     wordMap = new HashMap<>();
                 wordMap.putAll(map);
+
                 for (Map.Entry<String, Integer> e : map.entrySet()){
+
                     Integer cnt=e.getValue();
                     String str=e.getKey();
+
                     Integer cnt2=wordMap.get(str);
                     if (cnt2==0)
                         wordMap.put(str,cnt);
