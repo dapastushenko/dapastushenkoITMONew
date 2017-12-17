@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 
 public class Bank {
@@ -14,18 +16,9 @@ public class Bank {
 
     static Map<Integer, User> userMap = new HashMap<>();
     static Map<Integer, Account> accountMap = new HashMap<>();
-//    private Scanner scanner;
 
-//    public enum TxResult(){
-//    private final String claim;
-//        SUCCESS,
-//        NOT_ENOUGH;
-//
-//        private final String claim;
-//        Bank(String claim) {
-//        this.claim = claim;
-//
-//}
+    static BlockingQueue<Integer> mailSrc = new LinkedBlockingQueue();
+    static BlockingQueue<Integer> mailDist = new LinkedBlockingQueue();
 
     public static class Account {
         int accbalance;
@@ -90,7 +83,8 @@ public class Bank {
         }
 
     }
-    private class Transaction extends Thread{
+
+    private class Transaction extends Thread {
 
         Account src;
         Account dest;
@@ -108,18 +102,14 @@ public class Bank {
         }
     }
 
-    private TxResult transferMoney(Account src, Account dest, int amount){
+    private TxResult transferMoney(Account src, Account dest, int amount) {
 
-        if (amount > src.getAccbalance()){
+        if (amount > src.getAccbalance()) {
             System.out.println("Not money on " + src.getIdaccount());
             return TxResult.NOT_ENOUGH;
-    }
-
-
-
-
+        }
         try {
-            Thread.sleep(100);
+            Thread.sleep(10);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -127,6 +117,13 @@ public class Bank {
         synchronized (src) {
             int srcBalance = src.getAccbalance();
             src.setAccbalance(srcBalance - amount);
+            try {
+                mailSrc.put(src.iduser);
+                mailDist.put(dest.iduser);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
             synchronized (dest) {
                 dest.setAccbalance(dest.getAccbalance() + amount);
             }
@@ -134,16 +131,44 @@ public class Bank {
 
         return TxResult.SUCCESS;
     }
-    public static void main(String[] args) {
-//        Account acc = new Account(11, 0);
-//        Account acc1 = new Account(123, 0);
-//        Account acc2 = new Account(132, 1);
-//        Account acc3 = new Account(111, 1);
+
+    private static class Mailer extends Thread {
+        private final BlockingQueue<Integer> mailSrc;
+        private final BlockingQueue<Integer> mailDist;
+
+        private Mailer(BlockingQueue<Integer> mailSrc, BlockingQueue<Integer> mailDist) {
+            this.mailSrc = mailSrc;
+            this.mailDist = mailDist;
+        }
+        @Override
+        public void run() {
+            while (!isInterrupted()) {
+                try {
+                    Integer thisSrc = mailSrc.take();
+                    System.out.println("User:"+userMap.get(thisSrc).userName+"get money");
+                    Integer thisDist = mailDist.take();
+                    System.out.println("User:"+userMap.get(thisDist).userName+"send money");
+                    //                    Integer mailSrc = orders.take();
 //
-//        System.out.printf(String.valueOf(acc.abalance));
-//        transferMoney(Account id, Account id, int ammount);
+//                    System.out.println("Got order! " + order);
+//
+//                    sleep(500);
+//
+//                    dishes.add("dish " + order);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+
         //создание+добавление юзера в мапу
         Bank bank = new Bank();
+
+
+        new Mailer(mailSrc,mailDist).start();
 
         User usr0 = new User("user0");
         User usr1 = new User("user1");
@@ -164,14 +189,15 @@ public class Bank {
         Account account3 = new Account(111131, usr1.idUser);
         Account account4 = new Account(11120, usr2.idUser);
         Account account5 = new Account(1111120, usr2.idUser);
+
         accountMap.put(account0.getIdaccount(), account0);
-        accountMap.put(account0.getIdaccount(), account0);
-        accountMap.put(account1.getIdaccount(), account1);
         accountMap.put(account1.getIdaccount(), account1);
         accountMap.put(account2.getIdaccount(), account2);
-        accountMap.put(account3.getIdaccount(), account2);
+        accountMap.put(account3.getIdaccount(), account3);
+        accountMap.put(account4.getIdaccount(), account4);
+        accountMap.put(account5.getIdaccount(), account5);
 
-        Thread thread = bank.new Transaction(account0, account1, 100);
+        Thread thread = bank.new Transaction(account5, account1, 100);
         thread.start();
         Thread thread1 = bank.new Transaction(account2, account0, 100);
         thread1.start();
@@ -179,6 +205,5 @@ public class Bank {
         thread2.start();
 
 
-        //создание+добавлляем аккаут в мапу
     }
 }
