@@ -29,7 +29,7 @@ public class Bank {
             this.accbalance = accbalance;
             this.idaccount = accCount;
             this.iduser = iduser;
-            accCount = accCount + 1;
+            accCount++;
         }
 
         public void addAccaunt(Account account) {
@@ -68,6 +68,7 @@ public class Bank {
         public User(String userName) {
             this.idUser = userCount;
             this.userName = userName;
+            userCount++;
         }
 
         public void addUser(User user) {
