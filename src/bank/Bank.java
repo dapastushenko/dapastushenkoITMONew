@@ -117,16 +117,12 @@ public class Bank {
         synchronized (src) {
             int srcBalance = src.getAccbalance();
             src.setAccbalance(srcBalance - amount);
-            try {
-                mailSrc.put(src.iduser);
-                mailDist.put(dest.iduser);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
             synchronized (dest) {
                 dest.setAccbalance(dest.getAccbalance() + amount);
             }
+
+            mailSrc.add(src.iduser);
+            mailDist.add(dest.iduser);
         }
 
         return TxResult.SUCCESS;
@@ -148,13 +144,7 @@ public class Bank {
                     System.out.println("User:"+userMap.get(thisSrc).userName+"get money");
                     Integer thisDist = mailDist.take();
                     System.out.println("User:"+userMap.get(thisDist).userName+"send money");
-                    //                    Integer mailSrc = orders.take();
-//
-//                    System.out.println("Got order! " + order);
-//
-//                    sleep(500);
-//
-//                    dishes.add("dish " + order);
+                   sleep(100);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
